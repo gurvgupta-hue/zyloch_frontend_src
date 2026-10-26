@@ -1,0 +1,1131 @@
+/* ==========================================================================
+   Full-Height (100vh) Next.js Docs-Style Legal Documentation
+   Internal Container Scrolling, Hidden Scrollbars & Minimal Clean Hierarchy
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Viewport Root Container (100vh / 100dvh)
+   ========================================================================== */
+.docsContainer {
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.7;
+  position: relative;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ==========================================================================
+   2. Fixed Top Documentation Header Bar
+   ========================================================================== */
+.topHeader {
+  height: 56px;
+  min-height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border-subtle, var(--border));
+  z-index: 30;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.mobileMenuBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm, 6px);
+  border: 1px solid var(--border);
+  background-color: transparent;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.mobileMenuBtn:hover {
+  background-color: var(--bg-hover, rgba(255, 255, 255, 0.05));
+  border-color: var(--color-primary);
+}
+
+.brandLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  height: 24px;
+}
+
+.brandLogo {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+}
+
+.brandDivider {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 300;
+  opacity: 0.6;
+}
+
+.brandDocsBadge {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background-color: var(--badge-cyan-bg, rgba(6, 182, 212, 0.1));
+  border: 1px solid var(--badge-cyan-border, rgba(6, 182, 212, 0.25));
+  padding: 1px 7px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.breadcrumbChevron {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.breadcrumbCurrent {
+  color: var(--text);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Header Right Actions */
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 11px;
+  border-radius: var(--radius-sm, 6px);
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.actionBtn:hover {
+  color: var(--text);
+  background-color: var(--bg-hover, rgba(255, 255, 255, 0.05));
+  border-color: var(--border-hover, var(--color-primary));
+}
+
+.actionBtnPrimary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+}
+
+.actionBtnPrimary:hover {
+  background-color: var(--color-primary-600);
+  border-color: var(--color-primary-600);
+  color: #ffffff;
+}
+
+.actionBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.headerDivider {
+  width: 1px;
+  height: 18px;
+  background-color: var(--border);
+  margin: 0 2px;
+}
+
+.themeToggleWrapper {
+  display: flex;
+  align-items: center;
+}
+
+/* ==========================================================================
+   3. Docs Body Container: Holds Left Sidebar & Main Content
+   ========================================================================== */
+.docsBody {
+  flex: 1;
+  min-height: 0; /* Required for nested overflow scrolling */
+  height: calc(100vh - 56px);
+  height: calc(100dvh - 56px);
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ==========================================================================
+   4. Left Sidebar: Section Navigation & Document Switcher
+   Scrollable independently with HIDDEN scrollbars
+   ========================================================================== */
+.leftSidebar {
+  width: 290px;
+  flex-shrink: 0;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface);
+  border-right: 1px solid var(--border-subtle, var(--border));
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+
+  /* Hidden scrollbars across all browsers */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.leftSidebar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+  width: 0;
+  height: 0;
+}
+
+.sidebarInner {
+  padding: 20px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* In-Doc Search Input */
+.searchBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  height: 34px;
+  padding: 0 28px 0 32px;
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 6px);
+  color: var(--text);
+  font-size: 12.5px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.searchInput::placeholder {
+  color: var(--muted);
+}
+
+.searchInput:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--badge-cyan-bg, rgba(6, 182, 212, 0.15));
+}
+
+.searchClearBtn {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.searchClearBtn:hover {
+  color: var(--text);
+}
+
+/* Legal Document Switcher Section */
+.docSwitcherGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebarGroupTitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  padding: 0 8px;
+  margin-bottom: 2px;
+}
+
+.docSwitcherList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.docSwitcherItem {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm, 6px);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.docSwitcherItem:hover {
+  color: var(--text);
+  background-color: var(--bg-hover, rgba(255, 255, 255, 0.04));
+}
+
+.docSwitcherItemActive {
+  color: var(--color-primary);
+  background-color: var(--badge-cyan-bg, rgba(6, 182, 212, 0.08));
+  border-left-color: var(--color-primary);
+  font-weight: 600;
+}
+
+.docSwitcherIcon {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.docSwitcherItemActive .docSwitcherIcon {
+  color: var(--color-primary);
+  opacity: 1;
+}
+
+.docSwitcherText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Section Navigation (Table of Contents) in Left Sidebar */
+.sectionNavGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle, var(--border));
+}
+
+.sectionNavList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sectionNavItem {
+  margin: 0;
+}
+
+.sectionNavLink {
+  display: block;
+  padding: 6px 10px;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  line-height: 1.4;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all 0.15s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sectionNavLink:hover {
+  color: var(--text);
+  background-color: var(--bg-hover, rgba(255, 255, 255, 0.04));
+}
+
+.sectionNavLinkActive {
+  color: var(--color-primary);
+  background-color: var(--badge-cyan-bg, rgba(6, 182, 212, 0.08));
+  border-left-color: var(--color-primary);
+  font-weight: 600;
+}
+
+.sidebarBackdrop {
+  display: none;
+}
+
+/* ==========================================================================
+   5. Main Document Content Area
+   Scrolls independently within 100vh with HIDDEN scrollbars
+   ========================================================================== */
+.mainContent {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+
+  /* Hidden scrollbars across all browsers */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.mainContent::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+  width: 0;
+  height: 0;
+}
+
+.contentInner {
+  width: 100%;
+  max-width: 860px;
+  padding: 36px 48px 80px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile Collapsible Section Navigation Bar */
+.mobileSectionNav {
+  display: none;
+  margin-bottom: 20px;
+}
+
+.mobileSectionNavToggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 6px);
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.mobileSectionNavLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mobileSectionNavChevron {
+  color: var(--muted);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.mobileSectionNavChevronRotated {
+  transform: rotate(180deg);
+}
+
+.mobileSectionNavDropdown {
+  margin-top: 4px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 6px);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 260px;
+  overflow-y: auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.mobileSectionNavItem {
+  padding: 8px 10px;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.mobileSectionNavItem:hover {
+  background-color: var(--bg-hover, rgba(255, 255, 255, 0.05));
+  color: var(--text);
+}
+
+.mobileSectionNavItemActive {
+  background-color: var(--badge-cyan-bg, rgba(6, 182, 212, 0.1));
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Document Header (Minimal, No Heavy Cards/Gradients) */
+.articleHeader {
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-subtle, var(--border));
+}
+
+.articleHeaderMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.docBadge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background-color: var(--badge-cyan-bg, rgba(6, 182, 212, 0.1));
+  border: 1px solid var(--badge-cyan-border, rgba(6, 182, 212, 0.25));
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.lastUpdatedBadge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--muted);
+  background-color: transparent;
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.articleTitle {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  line-height: 1.25;
+  margin: 0;
+}
+
+/* Search Results Notice */
+.searchNotice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background-color: var(--badge-cyan-bg, rgba(6, 182, 212, 0.08));
+  border: 1px solid var(--badge-cyan-border, rgba(6, 182, 212, 0.25));
+  border-radius: var(--radius-sm, 6px);
+  color: var(--text);
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+.searchResetBtn {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.searchResetBtn:hover {
+  color: var(--color-primary-600);
+}
+
+/* Introductory Paragraphs */
+.introBlock {
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.introParagraph {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ==========================================================================
+   6. Document Sections: Minimal Clean Typography (No Cards, No Heavy Dividers)
+   ========================================================================== */
+.sectionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.sectionBlock {
+  scroll-margin-top: 24px;
+}
+
+.sectionHeadingRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.sectionHeading {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  line-height: 1.35;
+  margin: 0;
+}
+
+.anchorLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  opacity: 0;
+  text-decoration: none;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.sectionHeadingRow:hover .anchorLink,
+.anchorLink:focus {
+  opacity: 0.6;
+}
+
+.anchorLink:hover {
+  opacity: 1;
+  color: var(--color-primary);
+}
+
+.sectionBody {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contentItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.paragraph {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Styled Minimal Bullet Lists */
+.bulletList {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bulletItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.bulletDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  margin-top: 9px;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.bulletText {
+  flex: 1;
+}
+
+/* Search Highlights */
+.docsContainer mark {
+  background-color: rgba(6, 182, 212, 0.22);
+  color: inherit;
+  font-weight: 600;
+  border-radius: 2px;
+  padding: 1px 3px;
+}
+
+/* Inline Dynamic Links */
+.inlineLink {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(6, 182, 212, 0.4);
+  transition: text-decoration-color 0.15s ease, color 0.15s ease;
+}
+
+.inlineLink:hover {
+  color: var(--color-primary-600);
+  text-decoration-color: var(--color-primary);
+}
+
+/* Empty Search State */
+.emptyState {
+  padding: 40px 20px;
+  text-align: center;
+  background-color: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm, 6px);
+  margin-top: 12px;
+}
+
+.emptyIcon {
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 6px 0;
+}
+
+.emptyText {
+  font-size: 13.5px;
+  color: var(--muted);
+  max-width: 380px;
+  margin: 0 auto 16px auto;
+}
+
+.resetSearchButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 16px;
+  border-radius: var(--radius-sm, 6px);
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.resetSearchButton:hover {
+  background-color: var(--color-primary-600);
+}
+
+/* ==========================================================================
+   7. Previous / Next Document Navigation
+   ========================================================================== */
+.paginationNav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle, var(--border));
+}
+
+.paginationCard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 6px);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.paginationCard:hover {
+  border-color: var(--color-primary);
+  background-color: var(--bg-hover, rgba(255, 255, 255, 0.03));
+}
+
+.paginationPrev {
+  text-align: left;
+}
+
+.paginationNext {
+  text-align: right;
+}
+
+.paginationSub {
+  display: flex;
+  align-items: center;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.paginationNext .paginationSub {
+  justify-content: flex-end;
+}
+
+.paginationTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.paginationSpacer {
+  visibility: hidden;
+}
+
+/* ==========================================================================
+   8. Document Footer
+   ========================================================================== */
+.docFooter {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-subtle, var(--border));
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.docFooterContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.docFooterLinks {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footerLink {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.footerLink:hover {
+  color: var(--text);
+}
+
+.footerDot {
+  opacity: 0.4;
+}
+
+/* Floating Back To Top Button */
+.floatingBackToTop {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 20;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.floatingBackToTopVisible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.floatingBackToTop:hover {
+  background-color: var(--color-primary-600);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(6, 182, 212, 0.4);
+}
+
+/* ==========================================================================
+   9. Responsive Media Queries
+   ========================================================================== */
+@media (max-width: 960px) {
+  .mobileMenuBtn {
+    display: flex;
+  }
+
+  .leftSidebar {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    height: calc(100vh - 56px);
+    height: calc(100dvh - 56px);
+    z-index: 45;
+    transform: translateX(-100%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .leftSidebarOpen {
+    transform: translateX(0);
+  }
+
+  .sidebarBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    top: 56px;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 44;
+  }
+
+  .mobileSectionNav {
+    display: block;
+  }
+
+  .contentInner {
+    padding: 24px 20px 60px 20px;
+  }
+
+  .articleTitle {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 640px) {
+  .topHeader {
+    padding: 0 14px;
+    height: 52px;
+    min-height: 52px;
+  }
+
+  .docsBody {
+    height: calc(100vh - 52px);
+    height: calc(100dvh - 52px);
+  }
+
+  .leftSidebar {
+    top: 52px;
+    height: calc(100vh - 52px);
+    height: calc(100dvh - 52px);
+  }
+
+  .sidebarBackdrop {
+    top: 52px;
+  }
+
+  .brandLogo {
+    height: 20px;
+  }
+
+  .brandDivider,
+  .brandDocsBadge,
+  .breadcrumbs {
+    display: none;
+  }
+
+  .actionBtnText {
+    display: none;
+  }
+
+  .actionBtn {
+    padding: 0 9px;
+  }
+
+  .contentInner {
+    padding: 18px 14px 48px 14px;
+  }
+
+  .articleTitle {
+    font-size: 24px;
+  }
+
+  .paginationNav {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .paginationSpacer {
+    display: none;
+  }
+
+  .docFooterContent {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================================================
+   10. High-Fidelity Print & PDF Styles
+   ========================================================================== */
+@media print {
+  .docsContainer {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .topHeader,
+  .leftSidebar,
+  .sidebarBackdrop,
+  .mobileSectionNav,
+  .searchNotice,
+  .floatingBackToTop,
+  .paginationNav,
+  .anchorLink {
+    display: none !important;
+  }
+
+  .docsBody {
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .mainContent {
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+    padding: 0 !important;
+  }
+
+  .contentInner {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .articleHeader {
+    border-bottom: 2px solid #000000 !important;
+    padding-bottom: 10pt !important;
+    margin-bottom: 16pt !important;
+  }
+
+  .articleTitle {
+    color: #000000 !important;
+    font-size: 20pt !important;
+  }
+
+  .docBadge,
+  .lastUpdatedBadge {
+    border: 1px solid #888888 !important;
+    background: transparent !important;
+    color: #222222 !important;
+  }
+
+  .sectionBlock {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .sectionHeading {
+    color: #000000 !important;
+    font-size: 13pt !important;
+  }
+
+  .paragraph,
+  .introParagraph,
+  .bulletItem {
+    color: #1a1a1a !important;
+    font-size: 9.5pt !important;
+    line-height: 1.5 !important;
+  }
+
+  .bulletDot {
+    background-color: #000000 !important;
+  }
+
+  .docsContainer mark {
+    background: transparent !important;
+    font-weight: bold !important;
+  }
+
+  .inlineLink {
+    color: #000000 !important;
+    text-decoration: underline !important;
+  }
+}

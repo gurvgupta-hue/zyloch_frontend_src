@@ -1,0 +1,58 @@
+name: docker build
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Scan for secrets
+        uses: Secure-Code-dev/paved_actions_composites/job-central-actions/secret-scanning@main
+        with:
+          scan_path: .
+          fail_on_leak: "true"
+
+      - name: Build image
+        uses: Secure-Code-dev/paved_actions_composites/job-central-actions/docker-image-build@main
+        with:
+          image-tag: docker.io/securecodedev/zyloch_fronted_app:${{ github.sha }}
+          context: ./Zyloch-Frontend
+          # dockerfile-path: ./Zyloch-Frontend/Dockerfile
+          name: Zyloch-Frontend
+          version: ${{ github.sha }}
+          source: ${{ github.server_url }}/${{ github.repository }}
+          summary: "Zyloch Frontend Build"
+          team: zyloch
+          author: ${{ github.actor }}
+
+      - name: Generate SBOM
+        uses: Secure-Code-dev/paved_actions_composites/job-central-actions/sbom-generation@main
+        with:
+          image-tag: docker.io/securecodedev/zyloch_fronted_app:${{ github.sha }}
+          sbom-file: sbom.spdx.json
+
+      - name: Scan for vulnerabilities
+        continue-on-error: true
+        uses: Secure-Code-dev/paved_actions_composites/job-central-actions/sbom-scan@main
+        with:
+          image-tag: docker.io/securecodedev/zyloch_fronted_app:${{ github.sha }}
+          sbom-file: sbom.spdx.json
+          grype-file: grype-report.json
+          fail-severity: high
+
+
+      - name: Push image
+        uses: Secure-Code-dev/paved_actions_composites/job-central-actions/docker-image-push@main
+        with:
+          registry: docker.io
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          image-tag: docker.io/securecodedev/zyloch_fronted_app:${{ github.sha }}
